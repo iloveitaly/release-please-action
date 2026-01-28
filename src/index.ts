@@ -14,6 +14,7 @@
 
 import * as core from '@actions/core';
 import {GitHub, Manifest, CreatedRelease, PullRequest, VERSION} from 'release-please';
+import {inspect} from 'util';
 
 const DEFAULT_CONFIG_FILE = 'release-please-config.json';
 const DEFAULT_MANIFEST_FILE = '.release-please-manifest.json';
@@ -227,6 +228,9 @@ function outputPRs(prs: (PullRequest | undefined)[]) {
 
 if (require.main === module) {
   main().catch(err => {
-    core.setFailed(`release-please failed: ${err.message}`)
+    core.setFailed(`release-please failed: ${err.message}`);
+    core.startGroup('Detailed Error Information');
+    core.info(inspect(err, {depth: null, colors: false}));
+    core.endGroup();
   })
 }
