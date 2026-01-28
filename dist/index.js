@@ -105508,6 +105508,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.main = void 0;
 const core = __nccwpck_require__(42186);
 const release_please_1 = __nccwpck_require__(24363);
+const util_1 = __nccwpck_require__(73837);
 const DEFAULT_CONFIG_FILE = 'release-please-config.json';
 const DEFAULT_MANIFEST_FILE = '.release-please-manifest.json';
 const DEFAULT_GITHUB_API_URL = 'https://api.github.com';
@@ -105672,6 +105673,9 @@ function outputPRs(prs) {
 if (require.main === require.cache[eval('__filename')]) {
     main().catch(err => {
         core.setFailed(`release-please failed: ${err.message}`);
+        core.startGroup('Detailed Error Information');
+        core.info((0, util_1.inspect)(err, { depth: null, colors: false }));
+        core.endGroup();
     });
 }
 
